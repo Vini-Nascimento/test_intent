@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Abrir Pesquisa</title>
+  <script>
+    window.onload = function () {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get("id");
+
+      // Dados do app
+      const androidScheme = `imidiaapp://pesquisa?id=${id}`;
+      const iosScheme = `imidiaapp://pesquisa?id=${id}`;
+      const fallbackUrl = `https://imidiaweb.com.br/pesquisa?id=${id}`;
+
+      const userAgent = navigator.userAgent || navigator.vendor;
+
+      if (/android/i.test(userAgent)) {
+        // Android
+        window.location.href = androidScheme;
+
+        setTimeout(() => {
+          window.location.href = fallbackUrl;
+        }, 1500);
+      } else if (/iPad|iPhone|iPod/.test(userAgent)) {
+        // iOS
+        window.location.href = iosScheme;
+
+        setTimeout(() => {
+          window.location.href = fallbackUrl;
+        }, 1500);
+      } else {
+        // Web ou desktop
+        window.location.href = fallbackUrl;
+      }
+    };
+  </script>
+</head>
+<body>
+  <p>Redirecionando...</p>
+</body>
+</html>
