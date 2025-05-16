@@ -7,18 +7,19 @@
   <script>
     window.onload = function () {
       const params = new URLSearchParams(window.location.search);
-      const id = params.get("id");
+      const id = params.get("id") || "";
 
-      // Dados do app
-      const androidScheme = `imidiaapp://pesquisa?id=${id}`;
-      const iosScheme = `imidiaapp://pesquisa?id=${id}`;
+      // Configurações
+      const androidPackage = "com.seupacote.imidiaapp"; // << coloca o nome do teu package real aqui!
       const fallbackUrl = `https://imidiaweb.com.br/pesquisa?id=${id}`;
+      const iosScheme = `imidiaapp://pesquisa?id=${id}`;
+      const intentUrl = `intent://pesquisa?id=${id}#Intent;scheme=imidiaapp;package=${androidPackage};end`;
 
       const userAgent = navigator.userAgent || navigator.vendor;
 
       if (/android/i.test(userAgent)) {
-        // Android
-        window.location.href = androidScheme;
+        // Android com intent://
+        window.location.href = intentUrl;
 
         setTimeout(() => {
           window.location.href = fallbackUrl;
@@ -38,6 +39,6 @@
   </script>
 </head>
 <body>
-  <p>Redirecionando...</p>
+  <p>Redirecionando para o aplicativo...</p>
 </body>
 </html>
